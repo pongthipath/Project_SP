@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Poll Organizer</title>
+</head>
+<body>
+
+<h1>Poll Organizer</h1>
+<label for="fname">Poll Name:</label><br>
+<input type="text" id="poll_name" name="poll_name"><br>
+<input type="submit" value="Submit" onclick="assData()">
+<p id="data"></p>
+
+<script>
+    function assData(){
+            fetch('/data/' + poll_name.value)
+                .then(
+                    function(response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                        return;
+                        }
+
+                    response.json().then(function(data) {
+                        document.getElementById("data").innerHTML = "Create successful!";
+                        console.log(data);
+                    });
+                }
+            )
+        .catch(function(err) {
+            console.log('Fetch Error :-S', err);
+        });
+    };
+</script>
+
+
+</body>
+</html>

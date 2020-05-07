@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Registered voter</title>
+</head>
+<body>
+
+<h1>Registered voter</h1>
+<div id="container"></div>
+<button onclick="sendVote()">Submit</button>
+<p id="data"></p>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+        fetch('/voter/data/')
+            .then(
+                function(response) {
+                    if (response.status !== 200) {
+                        console.log('Looks like there was a problem. Status Code: ' +
+                        response.status);
+                    return;
+                    }
+
+                response.json().then(function(data) {
+                    $(document).ready(function() {
+
+                    var radios = data;
+
+                    for (var value of radios)
+                    {
+                    $('#container').append(
+                        $('<input>').prop({
+                        type: 'radio',
+                        id: value,
+                        name: 'poll',
+                        value: value
+                        })
+                    ).append(
+                        $('<label>').prop({
+                        for: value
+                        }).html(value)
+                    )
+                    }
+                });
+            });
+        })
+    .catch(function(err) {
+        console.log('Fetch Error :-S', err);
+    });
+    function sendVote(){
+        var radioValue = $("input[name='poll']:checked").val();
+        fetch('/voter/data/' + radioValue)
+                    .then(
+                    function(response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                            response.status);
+                        return;
+                        }
+
+                    response.json().then(function(data) {
+                    });
+                }
+            )
+        .catch(function(err) {
+            console.log('Fetch Error :-S', err);
+        });
+    }
+
+</script>
+
+</body>
+</html>
