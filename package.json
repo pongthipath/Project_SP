@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/pongthipath/Project_SP#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.18.2"
   }
 }
